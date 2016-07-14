@@ -1,0 +1,142 @@
+body {
+    background-image: url(partials/images/beer-bkg.jpg);
+    background-attachment: fixed;
+    /*background-size: 1800px;*/
+    background-size: cover;
+    /*-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;*/
+    /*width: 100%;*/
+}
+
+@media only screen and (min-width: 100%) {
+    background-attachment: scroll;
+}
+
+.container.title {
+    width: 0 auto;
+}
+
+.container {
+    position: relative;
+    margin-top: 100px;
+}
+
+.ratings {
+    float: right;
+    position: relative;
+}
+
+h1 {
+    color: #fff;
+}
+
+h3 {
+    font-size: 12pt;
+}
+
+p {
+    color: #fff;
+    font-size: 10pt;
+}
+
+
+/*PANEL CSS*/
+
+.panel,
+.jumbotron {
+    background-color: #111106;
+    opacity: 0.8;
+    color: #fff;
+    border-color: transparent;
+}
+
+.lead {
+    color: #fff;
+    font-size: 12pt;
+}
+
+.panel-footer {
+    background-color: #111106;
+    opacity: 0.8;
+    color: #fff;
+    border-top: 1px solid #903030;
+    /*IPA Color*/
+}
+
+.panel>.panel-heading {
+    background-color: #000;
+    border-bottom: 1px solid #903030;
+    /*IPA Color*/
+}
+
+.fa>.fa-star {
+    color: #fff;
+}
+
+.btn {
+    background-color: #903030;
+    border-color: transparent;
+}
+
+
+/*Pagination background-color */
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #903030;
+}
+
+
+/* MAP CSS */
+
+#map {
+    border: 4px solid #903030;
+    width: 100%;
+    height: 300px;
+}
+
+.infoDetails {
+    color: #000;
+}
+
+label,
+.text-muted {
+    color: #fff;
+}
+
+pre {
+    background-color: #000;
+    color: yellow;
+}
+
+
+/*Image Logo*/
+
+.logo {
+    margin: 0 auto;
+    float: left;
+    position: relative;
+    /*left: 120px;*/
+}
+
+.navbar-default {
+    background-color: #903030;
+    border-bottom: 1px solid #903030;
+}
+
+
+/*Add a brewer form*/
+
+.formContainer {
+    border: 1px solid #903030;
+    padding: 10px;
+    background-color: #111106;
+    opacity: 0.8;
+    color: #fff;
+    margin-top: 10px;
+}

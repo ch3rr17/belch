@@ -1,0 +1,161 @@
+<!doctype html>
+<!-- Declares meanMapApp as the starting Angular module -->
+<html class="no-js" ng-app="belchApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Belch App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="partials/images/favicon-beer.ico">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="../bower_components/angular-bootstrap/ui-bootstrap-csp.css" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Holder JS -->
+    <!--  -->
+    <!-- Google Maps API -->
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyB7u7pKCZSUQf_ERIavnUUD1jtWIP2hVd8&libraries=places"></script>
+    <!-- Modernizr -->
+    <!-- <script src="../bower_components/modernizr/bin/modernizr"></script> -->
+    <!-- JS Source -->
+    <!-- <script src="../bower_components/jquery/jquery.js"></script> -->
+    <!-- <script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script> -->
+</head>
+
+<body ng-controller="breweryController as vm">
+    <div class="container">
+        <!-- Title and Logo -->
+        <div id="header" class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header"> <p class="logo"><img src="partials/images/belch_v5.png" alt=""></p></div>
+           
+        </div>
+        <!-- CONTENT CONTAINER -->
+        <div class="container">
+            <div class="row">
+                <!-- Map col container -->
+                <div class="col-md-6">
+                    <ng-map id="map" zoom="8" center="current-location" zoom-to-include="auto" map-type-control="false">
+                        <marker id="{{brewer.breweryname}}" ng-repeat="brewer in vm.paginatedResponse.docs" position="{{brewer.brewerylocation[1]}},{{brewer.brewerylocation[0]}}" data="{{vm.paginatedResponse.docs}}" animation="Animation.DROP" title="{{brewer.breweryname}}" on-click="vm.showBrewery(event,brewer)" icon="{url:'../partials/images/bar.png', scaledSize:[30,30], anchor: [11,40] }"></marker>
+                        <!-- Traffic Layer - optional -->
+                        <!-- <traffic-layer></traffic-layer> -->
+                        <marker position="current-location" zoom="10" animation="Animation.BOUNCE"></marker>
+                        <info-window id="breweryInfo">
+                            <div ng-non-bindable>
+                                <p class="infoDetails">Brewery Name: {{vm.breweryInfoWindow.breweryname}}</p>
+                                <p class="infoDetails">Brewery Address: {{vm.breweryInfoWindow.breweryaddress}}</p>
+                                <p class="infoDetails"><a target="_blank" ng-href="https://www.google.com/maps/dir/Current+Location/{{vm.breweryInfoWindow.brewerylocation[1] + ',' + vm.breweryInfoWindow.brewerylocation[0]}}" class="btn btn-primary .btn btn-primary btn-sm">Directions</a></p>
+                                <!-- <p><directions origin="current-location" destination="{{vm.breweryInfoWindow.brewerylocation[1] + ',' + vm.breweryInfoWindow.brewerylocation[0]}}">Directions</directions></p> -->
+                            </div>
+                        </info-window>
+                    </ng-map>
+                       <div ng-show="vm.place" class="formContainer">
+                                <!-- <pre>{{vm.place | json}}</pre> -->
+                                <p>Address: {{vm.place.formatted_address}}</p>
+                                <br/>
+                                <p>Location: {{vm.place.geometry.location.lng() + ',' + vm.place.geometry.location.lat()}}</p>
+                                <br/>
+                                Ratings: {{vm.place.reviews.aspects}}
+                                <p>Address : {{vm.address}}</p>
+                            </div>
+                     <!-- Add a Brewery form -->
+                     <br />
+                    <button class="btn btn-primary btn-xs" ng-click="showForm=!showForm">Add a brewery</button>
+                    <br />
+                    <!-- Output Tester for Google Places -->
+                    
+                    <form class="formContainer" ng-submit="vm.newBrewery()" ng-show="showForm">
+                        <fieldset class="form-group">
+                            <label for="breweryname">Brewery Name</label>
+                            <input type="text" class="form-control input-sm" ng-model="vm.brewer.breweryname">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="breweryaddress">Brewery Address</label>
+                            <input type="text" class="form-control input-sm" ng-model="vm.brewer.breweryaddress">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="brewerywebsite">Brewery Website</label>
+                            <input type="text" class="form-control input-sm" ng-model="vm.brewer.brewerywebsite">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="brewerylocation">Brewery Location</label>
+                            <!-- <input type="text" class="form-control input-sm" ng-model="vm.brewer.brewerylocation"> -->
+                            <input places-auto-complete class="form-control input-sm" ng-model="vm.address" component-restrictions="{country:'us'}" types="{{types}}" on-place-changed="vm.placeChanged()" />
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary btn-xs">Submit</button>
+
+                    </form>
+                </div>
+                <br />
+                <!-- Search and panel info container -->
+                <div class="col-md-6">
+                    <div class="row">
+                        <!-- Search for a brewery -->
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for a brewery" ng-model="vm.searchTerm" autofocus ng-change="vm.getBreweries()">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-search">
+                                            <span class="sr-only">Search...</span>
+                                </span>
+                                </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+
+                    <br/>
+                    <!-- Provides a list of breweries with a limit of 6 breweries per page index -->
+                    <div class="row">
+                        <br>
+                        <div class="col-md-6" ng-repeat-start="brewer in vm.paginatedResponse.docs | filter: paginatedResponse.docs | orderBy: 'breweryname'">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{brewer.breweryname}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p class="ratings">Rating <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></p>
+                                    <br>
+                                    <p>Address: {{brewer.breweryaddress}}</p>
+                                    <p><a target="_new" ng-href="{{brewer.brewerywebsite}}" class="btn btn-primary btn-xs">Website</a></p>
+                                </div>
+                                <div class="panel-footer">
+                                    <p ng-click="showComments=!showComments"><i class="fa fa-comment-o" aria-hidden="true"></i> Post a comment</p>
+                                    <p ng-show="showComments"><a href="#">Sign in</a> or <a href="#"> register </a> to make a comment. Othewise, view comments.
+                                        <input type="text" class="form-control" placeholder="Post a comment..." disabled>
+                                    </p>
+                                    <p ng-hide="showComments">@cherr says: You guys are awesome!</p>
+                                    <p ng-hide="showComments">@breweryname says: Thank you!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix" ng-show="($index + 1) % 2 === 0" ng-repeat-end></div>
+                    </div>
+                    <!-- <select ng-model="vm.pageSize"></select> -->
+                    <uib-pagination total-items="vm.paginatedResponse.total" ng-change="vm.getBreweries()" class="pagination-sm" ng-model="vm.pageIndex" boundary-links="true" boundary-link-numbers="true" force-ellipses="true" max-size="vm.maxSize" items-per-page="vm.pageSize"></uib-pagination>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            <p class="text-center"><span class="glyphicon glyphicon-check"></span> Created by Cherr Batac
+                <a target="_new" href="https://github.com/ch3rr17">Github Repo</a></p>
+        </div>
+    </div>
+    <!-- Angular components -->
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+    <!-- Angular Files -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers/brewery.controller.js"></script>
+    <script src="js/services/brewery.service.js"></script>
+</body>
+
+</html>
