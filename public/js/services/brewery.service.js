@@ -10,7 +10,6 @@
     /* @ngInject */
     function breweryFactory($http, $q, $rootScope) {
         var service = {
-            /*grabBrewers: grabBrewers,*/
             brewersPage: brewersPage,
             addBrewer: addBrewer
         };
@@ -20,7 +19,7 @@
 
         ////////////////
 
-
+        //Grabs a list of breweries and paginates item by index
         function brewersPage(pageSize, pageIndex, term) {
             var defer = $q.defer();
 
@@ -37,6 +36,7 @@
             return defer.promise;
         }
 
+        //Adds a brewery to the database
         function addBrewer(brewer){
             var defer = $q.defer();
 

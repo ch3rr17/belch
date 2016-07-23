@@ -36,9 +36,6 @@
 
         vm.showComments = false; //shows and hides comments upon click
 
-        vm.place.reviews = [];
-
-
 
         /////////////////
 
@@ -57,9 +54,7 @@
         //Shows info window for map markers
         vm.showBrewery = function(event, brewer) {
             vm.breweryInfoWindow = brewer;
-            //console.log(brewer);
             $rootScope.map.showInfoWindow('breweryInfo', brewer.breweryname);
-
          
         };
 
@@ -79,7 +74,6 @@
                 .then(
                     function(response) {
                         vm.paginatedResponse = response;
-                        //console.log('page here', response);
                     },
                     function(error) {
                         $log.error('Failure getting breweries', error);

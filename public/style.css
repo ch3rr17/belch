@@ -1,12 +1,7 @@
 body {
     background-image: url(partials/images/beer-bkg.jpg);
     background-attachment: fixed;
-    /*background-size: 1800px;*/
     background-size: cover;
-    /*-webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;*/
-    /*width: 100%;*/
 }
 
 @media only screen and (min-width: 100%) {
