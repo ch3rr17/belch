@@ -12,34 +12,29 @@
         var vm = this;
         vm.title = 'breweryController';
 
-        /*DEFINITIONS*/
-        /*Filter search*/
+        //DEFINITIONS
+        //Filter search
         vm.searchTerm = ''; //sets a blank string to hold a breweryname
 
-        /* Pagination Controllers*/
+        //Pagination Controllers
         vm.pageSize = 6; //displays 6 items per page
         vm.pageIndex = 1; //indicates the index of a certain page - default start at 1
         vm.maxSize = 6; //indicates the number of indexes to display in the pagination element - triggers ellipses
 
-        /*MAP Controllers*/
+        //MAP Controllers
         vm.breweryInfoWindow = {}; //holds breweries for map info
-        //vm.showMap = false;
+        
 
-        /*Add Brewery Controllers*/
+        //Add Brewery Controllers
         vm.showForm = false;
         vm.brewer = {};
 
-        /*Google Places*/
-        vm.showSearch = false;
+        //Google Places
         vm.place = {}; //holds places info
-        vm.types = "['establishment']"; //holds types of search location
-
-        vm.showComments = false; //shows and hides comments upon click
-
 
         /////////////////
 
-        /*FUNCTIONS*/
+        //FUNCTIONS
 
         //Initializes the Google Map
         initialize();
@@ -90,7 +85,6 @@
             breweryFactory.addBrewer(vm.brewer)
                 .then(
                     function(response) {
-
                     },
                     function(err) {
                         $log.error('Failure adding a new brewery', error);

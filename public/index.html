@@ -62,7 +62,6 @@
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="brewerylocation">Brewery Location</label>
-                            <!-- <input type="text" class="form-control input-sm" ng-model="vm.brewer.brewerylocation"> -->
                             <input places-auto-complete class="form-control input-sm" ng-model="vm.address" component-restrictions="{country:'us'}" types="{{types}}" on-place-changed="vm.placeChanged()" />
                         </fieldset>
                         <button type="submit" class="btn btn-primary btn-xs">Submit</button>
