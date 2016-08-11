@@ -1,3 +1,4 @@
+/*MAIN CONTAINER*/
 body {
     background-image: url(partials/images/beer-bkg.jpg);
     background-attachment: fixed;
@@ -116,7 +117,6 @@ pre {
     margin: 0 auto;
     float: left;
     position: relative;
-    /*left: 120px;*/
 }
 
 .navbar-default {
@@ -135,3 +135,4 @@ pre {
     color: #fff;
     margin-top: 10px;
 }
+

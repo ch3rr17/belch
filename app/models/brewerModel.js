@@ -27,7 +27,6 @@ var BrewerSchema = new Schema({
 });
 
 BrewerSchema.plugin(mongoosePaginate);
-//BrewerSchema.index({brewerylocation: '2dsphere'});
 
 //Exports BeerList Schema
 module.exports = mongoose.model('brewer-list', BrewerSchema);

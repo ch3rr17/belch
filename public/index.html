@@ -33,14 +33,12 @@
                     <ng-map id="map" zoom="8" center="current-location" zoom-to-include="auto" map-type-control="false">
                         <marker id="{{brewer.breweryname}}" ng-repeat="brewer in vm.paginatedResponse.docs" position="{{brewer.brewerylocation[1]}},{{brewer.brewerylocation[0]}}" data="{{vm.paginatedResponse.docs}}" animation="Animation.DROP" title="{{brewer.breweryname}}" on-click="vm.showBrewery(event,brewer)" icon="{url:'../partials/images/bar.png', scaledSize:[30,30], anchor: [11,40] }"></marker>
                         <!-- Traffic Layer - optional -->
-                        <!-- <traffic-layer></traffic-layer> -->
                         <marker position="current-location" zoom="10" animation="Animation.BOUNCE"></marker>
                         <info-window id="breweryInfo">
                             <div ng-non-bindable>
                                 <p class="infoDetails">Brewery Name: {{vm.breweryInfoWindow.breweryname}}</p>
                                 <p class="infoDetails">Brewery Address: {{vm.breweryInfoWindow.breweryaddress}}</p>
                                 <p class="infoDetails"><a target="_blank" ng-href="https://www.google.com/maps/dir/Current+Location/{{vm.breweryInfoWindow.brewerylocation[1] + ',' + vm.breweryInfoWindow.brewerylocation[0]}}" class="btn btn-primary .btn btn-primary btn-sm">Directions</a></p>
-                                <!-- <p><directions origin="current-location" destination="{{vm.breweryInfoWindow.brewerylocation[1] + ',' + vm.breweryInfoWindow.brewerylocation[0]}}">Directions</directions></p> -->
                             </div>
                         </info-window>
                     </ng-map>
@@ -49,7 +47,6 @@
                     <button class="btn btn-primary btn-xs" ng-click="showForm=!showForm">Add a brewery</button>
                     <br />
                     <!-- Output Tester for Google Places -->
-                    
                     <form class="formContainer" ng-submit="vm.newBrewery()" ng-show="showForm">
                         <fieldset class="form-group">
                             <label for="breweryname">Brewery Name</label>
@@ -106,14 +103,6 @@
                                     <br>
                                     <p>Address: {{brewer.breweryaddress}}</p>
                                     <p><a target="_new" ng-href="{{brewer.brewerywebsite}}" class="btn btn-primary btn-xs">Website</a></p>
-                                </div>
-                                <div class="panel-footer">
-                                    <p ng-click="showComments=!showComments"><i class="fa fa-comment-o" aria-hidden="true"></i> Post a comment</p>
-                                    <p ng-show="showComments"><a href="#">Sign in</a> or <a href="#"> register </a> to make a comment. Othewise, view comments.
-                                        <input type="text" class="form-control" placeholder="Post a comment..." disabled>
-                                    </p>
-                                    <p ng-hide="showComments">@cherr says: You guys are awesome!</p>
-                                    <p ng-hide="showComments">@breweryname says: Thank you!</p>
                                 </div>
                             </div>
                         </div>

@@ -47,7 +47,6 @@
         function initialize() {
             NgMap.getMap({ id: 'map' }).then(function(map) {
                 $rootScope.map = map;
-
             });
         };
 
@@ -60,11 +59,8 @@
 
         //Initializes and searches for places
         vm.placeChanged = function() {
-            vm.place = this.getPlace();
-            console.log('place', vm.place);
-            console.log('location', vm.place.geometry.location);
-            console.log('reviews', vm.place.reviews);
             $rootScope.map.setCenter(vm.place.geometry.location);
+
         };
 
         //Grabs a list of breweries from the database
@@ -91,11 +87,10 @@
             newLatLng[1] = vm.place.geometry.location.lat();
             newLatLng[0] = vm.place.geometry.location.lng();
             vm.brewer.brewerylocation = newLatLng;
-            console.log(vm.place.geometry.location.lng() + ',' + vm.place.geometry.location.lat()); //prints location in the console
             breweryFactory.addBrewer(vm.brewer)
                 .then(
                     function(response) {
-                        console.log('brewers are we', response.data);
+
                     },
                     function(err) {
                         $log.error('Failure adding a new brewery', error);

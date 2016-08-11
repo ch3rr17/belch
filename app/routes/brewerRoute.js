@@ -47,17 +47,6 @@ module.exports = function(app) {
     app.post('/brewers', function(req, res) {
 
         //Creates new brewery
-        
-        /*var newbrewer = new Brewer(req.body);*/
-
-        /*var newbrewer = new Brewer({
-            breweryname: '',
-            breweryaddress: '',
-            brewerywebsite: '',
-            brewerylocation: [Number]
-        }, {
-            _id: false
-        });*/
 
         var newbrewer = new Brewer({
             breweryname: req.body.breweryname,
@@ -83,18 +72,5 @@ module.exports = function(app) {
             }
         });
     });
-
-    /*app.post('/brewers/:pageSize/:pageIndex', function(req,res){
-        var pageSize = 5;
-        var pageIndex = 1;
-        var query = Brewer.find().skip(pageSize * pageIndex).limit(pageSize);
-        query.exec(function(err,data){
-            if(err)
-                res.send(err);
-
-            res.json(data);
-        });
-    });*/
-
 
 };
