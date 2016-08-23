@@ -49,13 +49,12 @@
         vm.showBrewery = function(event, brewer) {
             vm.breweryInfoWindow = brewer;
             $rootScope.map.showInfoWindow('breweryInfo', brewer.breweryname);
-         
         };
 
         //Initializes and searches for places
         vm.placeChanged = function() {
+            vm.place = this.getPlace();
             $rootScope.map.setCenter(vm.place.geometry.location);
-
         };
 
         //Grabs a list of breweries from the database
